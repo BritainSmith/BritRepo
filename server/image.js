@@ -71,7 +71,7 @@ var images = [
   {
     url:
       "https://upload.wikimedia.org/wikipedia/en/a/a0/Howls-moving-castleposter.jpg",
-    title: "Howl%27s Moving Castle"
+    title: "Howl's Moving Castle"
   },
 
   {

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { Card } from "./Card/Card";
+import { MovieDetails } from "./Card/MovieDetails";
 
 class FilmDisplay extends Component {
   constructor() {
@@ -8,59 +9,71 @@ class FilmDisplay extends Component {
 
     this.state = {
       movies: [],
+      selectedMovie: -1,
       moviesText: "",
       pageStart: 0,
       pageEnd: 20
     };
 
-    this.handleMovies = this.handleMovies.bind(this);
     this.addToMovies = this.addToMovies.bind(this);
     this.removeFromMovies = this.removeFromMovies.bind(this);
   }
 
-  componentDidMount() {
-    axios.get("http://localhost:3002/api/test").then(response => {
-      console.log(response);
-      this.setState({ movies: response.data });
+  selectMovie(index) {
+    this.setState(prevState => {
+      return { selectedMovie: index };
     });
   }
 
-  handleMovies(e) {
-    this.setState({ moviesTest: e.target.value });
-  }
-
-  addToMovies() {
+  updateMovies(id, movie) {
     axios
-      .post(`http://localhost:3002/api/test?newMovie=${this.state.moviesText}`)
-      .then(response => {
-        console.log(response.data.pop(), "from the server");
+      .put(`http://localhost:3002/api/test/posts?id=${id}`, movie)
+      .then(results => {
+        this.setState({ movies: results.data });
       });
   }
 
-  removeFromMovies() {
-    axios.delete(`http://localhost:3002/api/test/${1}`).then(response => {
+  addToMovies(movie) {
+    axios.post(`http://localhost:3002/api/test`, movie).then(results => {
+      this.setState({ movies: results.data });
+    });
+  }
+
+  removeFromMovies(id) {
+    axios.delete(`http://localhost:3002/api/test/${id}`).then(response => {
       this.setState({ movies: response.data });
     });
   }
 
-  render() {
-    let moviesRendered = this.state.movies.map((movie, index) => {
+  renderSelectedMovie() {
+    let movieIndex = this.state.selectedMovie;
+    if (movieIndex >= 0) {
+      return <MovieDetails movie={this.props.movies[movieIndex]} />;
+    }
+  }
+
+  renderMovies() {
+    return this.props.movies.map((movie, index) => {
       return (
         <Card
+          key={index}
           title={movie.title}
           description={movie.description}
           url={movie.url}
           index={index}
+          handleClick={e => this.selectMovie(index)}
+          buttonName="View Details"
         />
       );
     });
+  }
 
-    console.log("Movie RENDER", moviesRendered);
-
+  render() {
     return (
       <div className="movie">
-        {moviesRendered}
-        <button onClick={this.removeFromMovies}> Delete</button>
+        {this.renderMovies()}
+        <h2>DETAILS</h2>
+        {this.renderSelectedMovie()}
       </div>
     );
   }

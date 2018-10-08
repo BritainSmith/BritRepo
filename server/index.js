@@ -1,7 +1,13 @@
 const express = require("express");
 const { json } = require("body-parser");
 const cors = require("cors");
-const { getMovie, addMovie, deleteMovie } = require("./GhibliCtrl");
+const {
+  getMovies,
+  getSingleMovie,
+  addMovie,
+  deleteMovie,
+  updateMovie
+} = require("./GhibliCtrl");
 
 const app = express();
 const port = 3002;
@@ -9,9 +15,13 @@ const port = 3002;
 app.use(json());
 app.use(cors());
 
-app.get("/api/test", getMovie);
-app.post("/api/test", addMovie);
-app.delete("/api/test/:deleteIndex", deleteMovie);
+const moviesBaseUrl = "/api/test";
+
+app.get(moviesBaseUrl, getMovies);
+app.get(`${moviesBaseUrl}/:id`, getSingleMovie);
+app.post(moviesBaseUrl, addMovie);
+app.delete(`${moviesBaseUrl}/:id`, deleteMovie);
+app.put(`${moviesBaseUrl}/:id`, updateMovie);
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
