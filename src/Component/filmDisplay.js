@@ -14,34 +14,11 @@ class FilmDisplay extends Component {
       pageStart: 0,
       pageEnd: 20
     };
-
-    this.addToMovies = this.addToMovies.bind(this);
-    this.removeFromMovies = this.removeFromMovies.bind(this);
   }
 
   selectMovie(index) {
     this.setState(prevState => {
       return { selectedMovie: index };
-    });
-  }
-
-  updateMovies(id, movie) {
-    axios
-      .put(`http://localhost:3002/api/test/posts?id=${id}`, movie)
-      .then(results => {
-        this.setState({ movies: results.data });
-      });
-  }
-
-  addToMovies(movie) {
-    axios.post(`http://localhost:3002/api/test`, movie).then(results => {
-      this.setState({ movies: results.data });
-    });
-  }
-
-  removeFromMovies(id) {
-    axios.delete(`http://localhost:3002/api/test/${id}`).then(response => {
-      this.setState({ movies: response.data });
     });
   }
 
@@ -61,7 +38,8 @@ class FilmDisplay extends Component {
           description={movie.description}
           url={movie.url}
           index={index}
-          handleClick={e => this.selectMovie(index)}
+          delete={e => this.props.deleteMovie(index)}
+          viewDetails={e => this.selectMovie(index)}
           buttonName="View Details"
         />
       );

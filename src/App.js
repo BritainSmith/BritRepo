@@ -31,7 +31,9 @@ class App extends Component {
     });
   }
 
-  removeFromMovies(id) {
+  removeFromMovies(index) {
+    //need to add error checking for nulls
+    let id = this.state.movies[index].id;
     axios.delete(`http://localhost:3002/api/test/${id}`).then(response => {
       this.setState({ movies: response.data });
     });
@@ -65,7 +67,11 @@ class App extends Component {
           <Button className="button" onClick={e => this.createMovie()}>
             Create New Movie
           </Button>
-          <FilmDisplay movies={this.state.movies} />
+          {/* pass in the delete function as a prop below*/}
+          <FilmDisplay
+            movies={this.state.movies}
+            deleteMovie={this.removeFromMovies}
+          />
         </div>
       );
     }

@@ -11,10 +11,13 @@ export class Card extends Component {
 
         <Button
           key={this.props.index}
-          onClick={this.props.handleClick}
+          onClick={this.props.viewDetails}
           className="button"
         >
-          {this.props.buttonName}
+          View Details
+        </Button>
+        <Button onClick={this.props.delete} className="button">
+          Delete
         </Button>
       </div>
     );
