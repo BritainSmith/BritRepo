@@ -24,7 +24,7 @@ class FilmDisplay extends Component {
 
   renderSelectedMovie() {
     let movieIndex = this.state.selectedMovie;
-    if (movieIndex >= 0) {
+    if (movieIndex >= 0 && this.props.movies[movieIndex]) {
       return <MovieDetails movie={this.props.movies[movieIndex]} />;
     }
   }
