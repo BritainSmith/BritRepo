@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import { Card } from "./Card/Card";
 import { MovieDetails } from "./Card/MovieDetails";
+import "./filmDisplay.css";
 
 class FilmDisplay extends Component {
   constructor() {

@@ -3,6 +3,7 @@ import "./App.css";
 import FilmDisplay from "./Component/filmDisplay";
 import { Button } from "reactstrap";
 import { MovieForm } from "./Component/MovieForms";
+import Easteregg from "./Component/Easteregg";
 import axios from "axios";
 
 class App extends Component {
@@ -70,6 +71,18 @@ class App extends Component {
     this.setState({ showCreateForm: true, selected: index });
   }
 
+  handleEasteregg() {
+    return (
+      alert("you shouldnt be here..."),
+      (
+        <img
+          className="easteregg"
+          src="http://cdn.shopify.com/s/files/1/1158/9490/products/C000001182-PAR-ZOOM_f7cf5241-a203-4e3e-8de9-c3556b7346f5_800x.jpeg?v=1524405066"
+        />
+      )
+    );
+  }
+
   renderCreateForm() {
     if (this.state.showCreateForm) {
       if (this.state.selected > -1) {
@@ -90,14 +103,17 @@ class App extends Component {
     } else {
       return (
         <div>
+          <h1 className="title">Studio Ghibli Movie Editor</h1>
           <Button className="button" onClick={e => this.createMovie()}>
             Create New Movie
           </Button>
           <FilmDisplay
+            className="movie"
             movies={this.state.movies}
             deleteMovie={this.removeFromMovies}
             updateMovie={this.updateMovieForm}
           />
+          <Easteregg egg={this.handleEasteregg} />
         </div>
       );
     }

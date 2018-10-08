@@ -38,6 +38,7 @@ export class MovieForm extends Component {
     return movie.map((field, index) => {
       return (
         <MovieInput
+          className="movieinput"
           key={index}
           label={field.charAt(0).toUpperCase() + field.substr(1)}
           id={field}
@@ -53,7 +54,7 @@ export class MovieForm extends Component {
       <Form>
         {this.renderInputFields()}
         <Button
-          className="button"
+          className="submit"
           onClick={() => this.props.handleSubmit(this.state)}
         >
           Submit
