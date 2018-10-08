@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button } from "reactstrap";
 import "./card.css";
 
+/* TODO: REFACTOR THIS INTO A FUNCTIONAL COMPONENT */
 export class Card extends Component {
   render() {
     return (
@@ -18,6 +19,9 @@ export class Card extends Component {
         </Button>
         <Button onClick={this.props.delete} className="button">
           Delete
+        </Button>
+        <Button onClick={this.props.update} className="button">
+          Update
         </Button>
       </div>
     );

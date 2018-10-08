@@ -10,18 +10,27 @@ export class MovieForm extends Component {
       description: "",
       director: "",
       producer: "",
-      url: ""
+      url: "",
+      id: ""
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount(prevState, prevProps) {
+    if (prevProps != this.props) {
+      this.setState({
+        title: this.props.title,
+        description: this.props.description,
+        director: this.props.director,
+        producer: this.props.producer,
+        url: this.props.url,
+        id: this.props.id
+      });
+    }
   }
 
   handleChange(event) {
     this.setState({ [event.target.id]: event.target.value });
-  }
-
-  handleSubmit(event) {
-    console.log(this.state);
   }
 
   renderInputFields() {
@@ -32,7 +41,7 @@ export class MovieForm extends Component {
           key={index}
           label={field.charAt(0).toUpperCase() + field.substr(1)}
           id={field}
-          value={this.props[field]}
+          value={this.state[field]}
           handleChange={this.handleChange}
         />
       );
@@ -44,11 +53,10 @@ export class MovieForm extends Component {
       <Form>
         {this.renderInputFields()}
         <Button
-          className="button
-        "
+          className="button"
           onClick={() => this.props.handleSubmit(this.state)}
         >
-          Create
+          Submit
         </Button>
       </Form>
     );

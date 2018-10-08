@@ -10,19 +10,27 @@ class App extends Component {
     super();
     this.state = {
       showCreateForm: false,
-      movies: []
+      movies: [],
+      selected: -1
     };
     this.submitForm = this.submitForm.bind(this);
     this.addToMovies = this.addToMovies.bind(this);
     this.removeFromMovies = this.removeFromMovies.bind(this);
+    this.updateMovies = this.updateMovies.bind(this);
+    this.updateMovieForm = this.updateMovieForm.bind(this);
   }
 
-  updateMovies(id, movie) {
-    axios
-      .put(`http://localhost:3002/api/test/posts?id=${id}`, movie)
-      .then(results => {
-        this.setState({ movies: results.data });
+  updateMovies(movie) {
+    console.log(movie);
+    let id = this.state.movies[this.state.selected].id;
+
+    axios.put(`http://localhost:3002/api/test/${id}`, movie).then(results => {
+      this.setState({
+        movies: results.data,
+        showCreateForm: false,
+        selected: -1
       });
+    });
   }
 
   addToMovies(movie) {
@@ -58,8 +66,26 @@ class App extends Component {
     console.log(movie);
   }
 
+  updateMovieForm(index) {
+    this.setState({ showCreateForm: true, selected: index });
+  }
+
   renderCreateForm() {
     if (this.state.showCreateForm) {
+      if (this.state.selected > -1) {
+        let movie = this.state.movies[this.state.selected];
+        return (
+          <MovieForm
+            handleSubmit={this.updateMovies}
+            title={movie.title}
+            description={movie.description}
+            director={movie.director}
+            producer={movie.producer}
+            url={movie.url}
+            id={movie.id}
+          />
+        );
+      }
       return <MovieForm handleSubmit={this.submitForm} />;
     } else {
       return (
@@ -67,10 +93,10 @@ class App extends Component {
           <Button className="button" onClick={e => this.createMovie()}>
             Create New Movie
           </Button>
-          {/* pass in the delete function as a prop below*/}
           <FilmDisplay
             movies={this.state.movies}
             deleteMovie={this.removeFromMovies}
+            updateMovie={this.updateMovieForm}
           />
         </div>
       );

@@ -40,7 +40,7 @@ class FilmDisplay extends Component {
           index={index}
           delete={e => this.props.deleteMovie(index)}
           viewDetails={e => this.selectMovie(index)}
-          buttonName="View Details"
+          update={e => this.props.updateMovie(index)}
         />
       );
     });
