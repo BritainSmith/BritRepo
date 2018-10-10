@@ -49,10 +49,12 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:3002/api/test").then(response => {
-      console.log(response);
-      this.setState({ movies: response.data });
-    });
+    axios
+      .get("http://localhost:3002/api/test/List?numMovies=5")
+      .then(response => {
+        console.log(response);
+        this.setState({ movies: response.data });
+      });
   }
 
   createMovie() {

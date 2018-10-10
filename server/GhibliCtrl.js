@@ -40,6 +40,16 @@ function getMovies(req, res) {
   }
 }
 
+function getSetOfMovies(req, res) {
+  var numOfMovies = req.query.numMovies;
+  console.log("The number of movies is", numOfMovies);
+  if (!madeApiCall) {
+    getMovies(req, res);
+  }
+  var filteredMovies = movies.slice(0, numOfMovies);
+  res.status(200).send(filteredMovies);
+}
+
 function addMovie(req, res, next) {
   madeApiCall = true;
   let movie = req.body;
@@ -92,5 +102,6 @@ module.exports = {
   getSingleMovie,
   addMovie,
   updateMovie,
-  deleteMovie
+  deleteMovie,
+  getSetOfMovies
 };

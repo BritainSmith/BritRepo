@@ -6,7 +6,8 @@ const {
   getSingleMovie,
   addMovie,
   deleteMovie,
-  updateMovie
+  updateMovie,
+  getSetOfMovies
 } = require("./GhibliCtrl");
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(cors());
 const moviesBaseUrl = "/api/test";
 
 app.get(moviesBaseUrl, getMovies);
+app.get(`${moviesBaseUrl}/List?`, getSetOfMovies);
 app.get(`${moviesBaseUrl}/:id`, getSingleMovie);
 app.post(moviesBaseUrl, addMovie);
 app.delete(`${moviesBaseUrl}/:id`, deleteMovie);
